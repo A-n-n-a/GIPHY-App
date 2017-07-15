@@ -17,6 +17,8 @@
 		953BCC6D1F19332100377512 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCC6C1F19332100377512 /* CollectionViewCell.swift */; };
 		953BCC701F19472700377512 /* BahloSwiftGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCC6F1F19472700377512 /* BahloSwiftGif.swift */; };
 		953BCC971F19F6E000377512 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 953BCC961F19F6E000377512 /* GoogleService-Info.plist */; };
+		953BCC991F1A330E00377512 /* LargeGifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCC981F1A330E00377512 /* LargeGifViewController.swift */; };
+		953BCC9B1F1A387500377512 /* images (1).jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 953BCC9A1F1A387500377512 /* images (1).jpeg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		953BCC6C1F19332100377512 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		953BCC6F1F19472700377512 /* BahloSwiftGif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahloSwiftGif.swift; sourceTree = "<group>"; };
 		953BCC961F19F6E000377512 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		953BCC981F1A330E00377512 /* LargeGifViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeGifViewController.swift; sourceTree = "<group>"; };
+		953BCC9A1F1A387500377512 /* images (1).jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "images (1).jpeg"; path = "../../../Downloads/images (1).jpeg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,10 +84,12 @@
 			children = (
 				953BCC551F191BF700377512 /* AppDelegate.swift */,
 				953BCC571F191BF700377512 /* ViewController.swift */,
+				953BCC981F1A330E00377512 /* LargeGifViewController.swift */,
 				953BCC591F191BF700377512 /* Main.storyboard */,
 				953BCC6C1F19332100377512 /* CollectionViewCell.swift */,
 				953BCC6F1F19472700377512 /* BahloSwiftGif.swift */,
 				953BCC5F1F191BF700377512 /* Assets.xcassets */,
+				953BCC9A1F1A387500377512 /* images (1).jpeg */,
 				953BCC611F191BF700377512 /* LaunchScreen.storyboard */,
 				953BCC641F191BF700377512 /* Info.plist */,
 				953BCC961F19F6E000377512 /* GoogleService-Info.plist */,
@@ -166,6 +172,7 @@
 				953BCC631F191BF700377512 /* LaunchScreen.storyboard in Resources */,
 				953BCC971F19F6E000377512 /* GoogleService-Info.plist in Resources */,
 				953BCC601F191BF700377512 /* Assets.xcassets in Resources */,
+				953BCC9B1F1A387500377512 /* images (1).jpeg in Resources */,
 				953BCC5B1F191BF700377512 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -228,6 +235,7 @@
 				953BCC6D1F19332100377512 /* CollectionViewCell.swift in Sources */,
 				953BCC701F19472700377512 /* BahloSwiftGif.swift in Sources */,
 				953BCC581F191BF700377512 /* ViewController.swift in Sources */,
+				953BCC991F1A330E00377512 /* LargeGifViewController.swift in Sources */,
 				953BCC561F191BF700377512 /* AppDelegate.swift in Sources */,
 				953BCC5E1F191BF700377512 /* GIPHY__App.xcdatamodeld in Sources */,
 			);

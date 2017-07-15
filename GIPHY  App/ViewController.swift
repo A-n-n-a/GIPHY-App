@@ -16,8 +16,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var gifStrings = [String]()
     var gifsArray = [UIImageView]()
     
+    var selectedRow = CollectionViewCell()
+    
     //var gifImage = UIImage()
-    var gifView = UIImageView()
+    var gifLargeView = [UIImageView]()
     
     var image = UIImage()
     
@@ -171,13 +173,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 let images = i["images"] as! [String : Any]
                 let appropriateSize = images["fixed_height_small"] as! [String : Any]
                 let gifStringUrl = appropriateSize["url"] as! String
+                gifsArray.append(gifStringUrl)
+                
+                let largeGif = images["fixed_height"] as! [String : Any]
+                let largeGifUrl = largeGif["url"] as! String
+                //let urlString = self.gifStrings[indexPath.row]
+                let largeGifImage = UIImage.gif(url: largeGifUrl)
+                let largeGifView = UIImageView(image: largeGifImage)
+                gifLargeView.append(largeGifView)
                 
 //                let gifImage = UIImage.gif(url: gifStringUrl)
 //                gifView = UIImageView(image: gifImage)
 //               
 //                print(gifImage!)
                 
-                gifsArray.append(gifStringUrl)
+                
                 //myCollectionView.reloadData()
 
                 
@@ -398,6 +408,25 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
             //retrieveDataFromFirebase(isSearching: isSearching)
         }
+    }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        print(gifLargeView.count)
+        if gifLargeView.count == 0 {
+            self.myCollectionView.reloadData()
+            print(gifLargeView.count)
+        }
+        
+        let destViewController = segue.destination as! LargeGifViewController
+        
+        let selectedRowIndex = self.myCollectionView.indexPath(for: sender as! CollectionViewCell)
+        selectedRow = self.myCollectionView.cellForItem(at: selectedRowIndex!) as! CollectionViewCell
+        
+        destViewController.recievedGif = gifLargeView[(selectedRowIndex?.row)!]
+        destViewController.stringGif = gifStrings[(selectedRowIndex?.row)!]
     }
 
 
