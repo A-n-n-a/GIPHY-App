@@ -3,52 +3,35 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import CoreData
+import SystemConfiguration
 
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var myCollectionView: UICollectionView!
-   
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var isSearching = false
+//    var isSearching = false
     
     var gifStrings = [String]()
-    var gifsArray = [UIImageView]()
+
     
     var selectedRow = CollectionViewCell()
     
-    //var gifImage = UIImage()
-    var gifLargeView = [UIImageView]()
-    
-    var image = UIImage()
-    
-    //var url = String()
-    
     var ref: DatabaseReference?
+    
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    
+    var context = NSManagedObjectContext()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         ref = Database.database().reference()
         
-//        let topConstraint = NSLayoutConstraint(item: myCollectionView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 100)
-//        view.addConstraints([topConstraint])
-        
-        
-//        //MARK: RETRIEVE DATA FROM FIREBASE
-//        let currentUserID = Auth.auth().currentUser?.uid
-//        
-//        ref?.child(usersStr).child(currentUserID!).observe(.childAdded, with: { (snapshot) in
-//            //ref?.child(citiesStr).observe(.childAdded, with: { (snapshot) in
-//            if let value = snapshot.value as? String {
-//                self.item = value
-//                self.cities.append(self.item)
-//                self.id = snapshot.key
-//                self.idArray.append(self.id)
-//                self.tableView.reloadData()
-//            }
-//        })
-
+        context = appDelegate.persistentContainer.viewContext
         
         searchBar.delegate = self
         searchBar.returnKeyType = UIReturnKeyType.done
@@ -57,63 +40,30 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsetsMake(20, 0, 10, 0)
         layout.itemSize = CGSize(width: itemSize, height: itemSize)
-        
         layout.minimumInteritemSpacing = 3
         layout.minimumLineSpacing = 3
-        
         myCollectionView.collectionViewLayout = layout
         
         
+        retrieveDataFromFirebase()
         
-        ref?.queryOrdered(byChild: "gifList").observe(.childAdded, with: { (snapshot) in
-            // ref?.child("gifList").observe(.childAdded, with: { (snapshot) in
+        if isConnectedToNetwork() == false {
+            gifStrings = fetchFromCoreData()
+            myCollectionView.reloadData()
+            print("FROM CORE DATA: \(gifStrings.count)")
             
-            
-            
-            let item = snapshot.value! as! [String]
-            //print(item)
-            var index = 0
-            for _ in 0...24 {
-                let url = item[index]
-                self.gifStrings.append(url)
-                //print(url)
-                index += 1
-                //print(result.count)
-                
-                
-                //                    result.append(item[String(index)] as! String)
-                //                    index += 1
-            }
-            print(self.gifStrings.count)
-            if self.gifStrings.count == 25 {
-                self.myCollectionView.reloadData()
-                //  return
-            }
-            //                //self.gifStrings = item
-            //                //let singleRecipe = Recipe(dictionary: self.item)
-            //                //self.recipesSearchFromFirebase.append(singleRecipe)
-            //
-            
-            
-        })
+        }
 
-        
-        
-        //retrieveDataFromFirebase()
-        //myCollectionView.reloadData()
-       // print(gifStrings.count)
-        
-    
-        //gifStrings = getData()
-        //myCollectionView.reloadData()
+
         
     }
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(gifStrings.count)
+        
         if gifStrings.count == 0 {
             self.myCollectionView.reloadData()
         }
+        print("NUMBER OF ROWS: \(gifStrings.count)")
         return gifStrings.count
     }
     
@@ -135,18 +85,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
         
         
-                        //print(gifImage!)
-        
-        //let gifView = gifsArray[indexPath.row]
-        
-//        print(gifStrings.count)
-//        if gifStrings.count == 0 {
-//            self.myCollectionView.reloadData()
-//        }
-        
-        //cell.gifImage.center.x = cell.frame.size.width/(CGFloat(2.0))
-        
-        
         saveDataToFirebase(text: gifStrings)
         
         return cell
@@ -163,10 +101,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             let data = try Data(contentsOf: url)
             let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String: Any]
             let mainDictionary = json["data"] as! [[String : Any]]
-            //let gif = json["data"][0]["images"][1]["fixed_height_small"].string // as! [[String:AnyObject]]
-            
-            //removeDataFromFirebase(isSearching: isSearching)
-            
+
+            var n = 1
             for i in mainDictionary {
                 
                 
@@ -175,35 +111,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 let gifStringUrl = appropriateSize["url"] as! String
                 gifsArray.append(gifStringUrl)
                 
-                let largeGif = images["fixed_height"] as! [String : Any]
-                let largeGifUrl = largeGif["url"] as! String
-                //let urlString = self.gifStrings[indexPath.row]
-                let largeGifImage = UIImage.gif(url: largeGifUrl)
-                let largeGifView = UIImageView(image: largeGifImage)
-                gifLargeView.append(largeGifView)
-                
-//                let gifImage = UIImage.gif(url: gifStringUrl)
-//                gifView = UIImageView(image: gifImage)
-//               
-//                print(gifImage!)
-                
-                
-                //myCollectionView.reloadData()
-
-                
-
-                //let singleRecipe = Recipe(dictionary: i)
-                
-                //recipeArray.append(singleRecipe)
-                
-//                let recipesItem = [
-//                    titleString: singleRecipe.title,
-//                    hrefString: singleRecipe.href,
-//                    ingredientsString: singleRecipe.ingredients,
-//                    thumbnailString: singleRecipe.recipeImage ?? " "
-//                    ] as [String : Any]
-//                
-//                saveDataToFirebase(text: recipesItem, isSearching: isSearching)
+                print(n)
+                n += 1
                 
             }
         }
@@ -219,151 +128,123 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         var result = [String]()
         
-        if isSearching {
-            if searchBar.text != nil || searchBar.text != "" {
-                let input = searchBar.text!
-                let inputAddingPercentEncoding = input.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)
-                
-                let searchUrl = URL(string: "http://api.giphy.com/v1/gifs/search?q=\(inputAddingPercentEncoding!)&api_key=c61e8bb1a9c14a6e8dc6fb15d211b4b5")
-                result = parseData(url: searchUrl!)
-                
-                
-//                        let itemSize = UIScreen.main.bounds.width/3 - 3
-//                        let layout = UICollectionViewFlowLayout()
-//                        layout.sectionInset = UIEdgeInsetsMake(20, 0, 10, 0)
-//                        layout.itemSize = CGSize(width: itemSize, height: itemSize)
-//                
-//                        layout.minimumInteritemSpacing = 3
-//                        layout.minimumLineSpacing = 3
-//                        
-//                        myCollectionView.collectionViewLayout = layout
-            }
-        } else {
-            
-            let gifStringURL : String = "https://media1.giphy.com/media/JIX9t2j0ZTN9S/100.gif"
-//            let gifImage = UIImage.gif(url: gifStringURL)!
-//            gifView = UIImageView(image: gifImage)
-//           
-//            print(gifImage)
-            result.append(gifStringURL)
-            
-            
-            
-//            let defaultUrl = URL(string: "http://www.recipepuppy.com/api/?i=onions,garlic&q=omelet&p=3")
-//            defaultRecipes = parseData(url: defaultUrl!)
-        }
+
+        let input = searchBar.text!
+        let inputAddingPercentEncoding = input.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)
         
+        let searchUrl = URL(string: "http://api.giphy.com/v1/gifs/search?q=\(inputAddingPercentEncoding!)&api_key=c61e8bb1a9c14a6e8dc6fb15d211b4b5")
+        result = parseData(url: searchUrl!)
+
         return result
     }
     
-    // RETRIEVE DATA
     
-//    func retrieveDataFromFirebase(isSearching: Bool) {
-//
-//        if isSearching {
-//            
-//            ref?.child(searchString).observe(.childAdded, with: { (snapshot) in
-//                
-//                self.item = snapshot.value! as! [String : AnyObject]
-//                let singleRecipe = Recipe(dictionary: self.item)
-//                self.recipesSearchFromFirebase.append(singleRecipe)
-//                
-//                if self.recipesSearchFromFirebase.count == 10 {
-//                    self.tableView.reloadData()
-//                    //  return
-//                }
-//                
-//            })
-//        } else {
-//            
-//            ref?.child(defaultString).observe(.childAdded, with: { (snapshot) in
-//                
-//                self.item = snapshot.value! as! [String : AnyObject]
-//                let singleRecipe = Recipe(dictionary: self.item)
-//                self.recipesDefaultFromFirebase.append(singleRecipe)
-//                if self.recipesDefaultFromFirebase.count == 10 {
-//                    self.tableView.reloadData()
-//                    //  return
-//                }
-//            })
-//        }
-//    }
+    //MARK: FIREBASE
     
-    
-    //MARK: Save data to Firebase
     func saveDataToFirebase(text: [String]) {
         
         ref?.child("gifList").setValue(text)
         
-        //ref?.child(citiesStr).childByAutoId().setValue(text)
-        
     }
     
-    // RETRIEVE DATA
-    
-    func retrieveDataFromFirebase() { //-> [String] {
+    func retrieveDataFromFirebase() {
         
-        //var result = [String]()
-        //if isSearching {
-            ref?.queryOrdered(byChild: "gifList").observe(.childAdded, with: { (snapshot) in
-           // ref?.child("gifList").observe(.childAdded, with: { (snapshot) in
-                
-                
-                
-                let item = snapshot.value! as! [String]
-                //print(item)
-                var index = 0
-                for _ in 0...24 {
-                    let url = item[index]
-                    self.gifStrings.append(url)
-                    //print(url)
-                    index += 1
-                    //print(result.count)
-                    
-                    
-//                    result.append(item[String(index)] as! String)
-//                    index += 1
-                }
- //               print(self.gifStrings.count)
-//                if result.count == 25 {
-//                    self.myCollectionView.reloadData()
-//                    //  return
-//                }
-//                //self.gifStrings = item
-//                //let singleRecipe = Recipe(dictionary: self.item)
-//                //self.recipesSearchFromFirebase.append(singleRecipe)
-//                
-                
-                
-            })
-//        print(result.count)
-//        return result
-//        } else {
-//            
-//            ref?.child(defaultString).observe(.childAdded, with: { (snapshot) in
-//                
-//                self.item = snapshot.value! as! [String : AnyObject]
-//                let singleRecipe = Recipe(dictionary: self.item)
-//                self.recipesDefaultFromFirebase.append(singleRecipe)
-//                if self.recipesDefaultFromFirebase.count == 10 {
-//                    self.tableView.reloadData()
-//                    //  return
-//                }
-//            })
-//        }
-    }
+        ref?.queryOrdered(byChild: "gifList").observe(.childAdded, with: { (snapshot) in
+           
+            let item = snapshot.value! as! [String]
+            print("ITEM COUNT: \(item.count)")
+            var index = 0
+            for _ in 1...item.count {
+                let url = item[index]
+                self.gifStrings.append(url)
+                index += 1
 
+            }
+
+            if self.gifStrings.count == (item.count) {
+                self.myCollectionView.reloadData()
+                
+            }
+            
+        })
+    }
+    
+    
+    // MARK: CORE DATA
+    
+    // save data to Core Data
+    func saveToCoreData(array: [String]) {
+        
+        let entity = NSEntityDescription.insertNewObject(forEntityName: "Gif", into: self.context)
+        entity.setValue(array, forKey: "arrayOfStringUrls")
+        
+        do {
+            try context.save()
+            print("SAVED")
+            
+        } catch {
+            print("ERROR: \(error)")
+        }
+
+    }
+    
+    // getting data from core data
+    
+    
+    func fetchFromCoreData() -> [String] {
+        
+        var gifs = [String]()
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Gif")
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            let results = try context.fetch(request)
+            
+            if results.count > 0 {
+                for result in results {
+                    
+                    
+                    
+                    // delete all data from core data if needed
+                    
+                    
+//                    let resultData = result as! NSManagedObject
+//                    context.delete(resultData)
+//                    try context.save()
+//                    print("DELETED")
+                    
+                    
+                    
+                    
+                    // fetch data
+                    if let gifList = (result as AnyObject).value(forKey: "arrayOfStringUrls") as? [String] {
+                        
+                         gifs = gifList
+                        
+                    }
+                    
+                }
+                
+            }
+        } catch {
+            print("Error: \(error)")
+        }
+        return gifs
+    }
+    
+    
     
     
     //MARK: CORE DATA
 //    func save(name: String) {
-//        
+//
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        
+//
 //        let context = appDelegate.persistentContainer.viewContext
-//        
+//
 //        // Creating Managed Objects
-//        
+//
 //        let recipe = NSEntityDescription.insertNewObject(forEntityName: "Recipe", into: context) //as! RecipeMO
 //        
 //        // Set value to attribute
@@ -378,35 +259,32 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //        }
 //    }
 
-    //SEARCH BAR TEXT DID CHANGED
+    //MARK: SEARCH BAR
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if  searchBar.text == "" {
-            isSearching = false
+//            isSearching = false
             view.endEditing(true)
-            gifStrings = getData()
-            myCollectionView.reloadData()
+            retrieveDataFromFirebase()
+            self.myCollectionView.reloadData()
             
         }
         
     }
     
-    // SEARCH BUTTON CLICKED
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         if searchBar.text == nil || searchBar.text == "" {
-            isSearching = false
+
             view.endEditing(true)
         } else {
-            isSearching = true
+
             gifStrings = getData()
             myCollectionView.reloadData()
-            print(gifsArray)
-            print("COUNT: \(gifsArray.count)")
+            //print("SEARCH COUNT: \(gifStrings.count)")
+            saveToCoreData(array: gifStrings)
 
-            //retrieveDataFromFirebase(isSearching: isSearching)
         }
     }
     
@@ -414,19 +292,36 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        print(gifLargeView.count)
-        if gifLargeView.count == 0 {
-            self.myCollectionView.reloadData()
-            print(gifLargeView.count)
-        }
         
         let destViewController = segue.destination as! LargeGifViewController
         
         let selectedRowIndex = self.myCollectionView.indexPath(for: sender as! CollectionViewCell)
         selectedRow = self.myCollectionView.cellForItem(at: selectedRowIndex!) as! CollectionViewCell
         
-        destViewController.recievedGif = gifLargeView[(selectedRowIndex?.row)!]
         destViewController.stringGif = gifStrings[(selectedRowIndex?.row)!]
+    }
+    
+    
+    func isConnectedToNetwork() -> Bool {
+        
+        var zeroAddress = sockaddr_in(sin_len: 0, sin_family: 0, sin_port: 0, sin_addr: in_addr(s_addr: 0), sin_zero: (0, 0, 0, 0, 0, 0, 0, 0))
+        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
+        zeroAddress.sin_family = sa_family_t(AF_INET)
+        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
+            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
+                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+            }
+        }
+        
+        var flags = SCNetworkReachabilityFlags()
+        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
+            return false
+        }
+        let isReachable = (flags.rawValue & UInt32(kSCNetworkFlagsReachable)) != 0
+        let needsConnection = (flags.rawValue & UInt32(kSCNetworkFlagsConnectionRequired)) != 0
+        
+        return (isReachable && !needsConnection)
+        
     }
 
 
