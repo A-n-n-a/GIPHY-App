@@ -1,6 +1,8 @@
 
 
 import UIKit
+import Firebase
+import FirebaseDatabase
 
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UISearchBarDelegate {
@@ -19,14 +21,32 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var image = UIImage()
     
+    //var url = String()
+    
+    var ref: DatabaseReference?
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        ref = Database.database().reference()
         
 //        let topConstraint = NSLayoutConstraint(item: myCollectionView, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.top, multiplier: 1, constant: 100)
 //        view.addConstraints([topConstraint])
         
         
-        
+//        //MARK: RETRIEVE DATA FROM FIREBASE
+//        let currentUserID = Auth.auth().currentUser?.uid
+//        
+//        ref?.child(usersStr).child(currentUserID!).observe(.childAdded, with: { (snapshot) in
+//            //ref?.child(citiesStr).observe(.childAdded, with: { (snapshot) in
+//            if let value = snapshot.value as? String {
+//                self.item = value
+//                self.cities.append(self.item)
+//                self.id = snapshot.key
+//                self.idArray.append(self.id)
+//                self.tableView.reloadData()
+//            }
+//        })
+
         
         searchBar.delegate = self
         searchBar.returnKeyType = UIReturnKeyType.done
@@ -41,12 +61,54 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         myCollectionView.collectionViewLayout = layout
         
-        gifsArray = getData()
+        
+        
+        ref?.queryOrdered(byChild: "gifList").observe(.childAdded, with: { (snapshot) in
+            // ref?.child("gifList").observe(.childAdded, with: { (snapshot) in
+            
+            
+            
+            let item = snapshot.value! as! [String]
+            //print(item)
+            var index = 0
+            for _ in 0...24 {
+                let url = item[index]
+                self.gifStrings.append(url)
+                //print(url)
+                index += 1
+                //print(result.count)
+                
+                
+                //                    result.append(item[String(index)] as! String)
+                //                    index += 1
+            }
+            print(self.gifStrings.count)
+//            if self.gifStrings.count == 25 {
+//                self.myCollectionView.reloadData()
+//                //  return
+//            }
+            //                //self.gifStrings = item
+            //                //let singleRecipe = Recipe(dictionary: self.item)
+            //                //self.recipesSearchFromFirebase.append(singleRecipe)
+            //
+            
+            
+        })
+
+        
+        
+        //retrieveDataFromFirebase()
+        //myCollectionView.reloadData()
+        print(gifStrings.count)
+        
+    
+        //gifStrings = getData()
+        //myCollectionView.reloadData()
         
     }
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return gifsArray.count
+        return gifStrings.count
     }
     
     
@@ -55,21 +117,32 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CollectionViewCell
         
+        let urlString = gifStrings[indexPath.row]
+        let gifImage = UIImage.gif(url: urlString)
+        let gifView = UIImageView(image: gifImage)
         
+                        //print(gifImage!)
         
-        let gifView = gifsArray[indexPath.row]
+        //let gifView = gifsArray[indexPath.row]
         cell.addSubview(gifView)
+        
+        if gifStrings.count == 0 {
+            self.myCollectionView.reloadData()
+        }
+        
         //cell.gifImage.center.x = cell.frame.size.width/(CGFloat(2.0))
         cell.gifImage = gifView
+        
+        saveDataToFirebase(text: gifStrings)
         
         return cell
     }
     
     // PARSE DATA
     
-    func parseData(url: URL) -> [UIImageView] {
+    func parseData(url: URL) -> [String] {
         
-        var gifsArray = [UIImageView]()
+        var gifsArray = [String]()
         
         do {
             
@@ -86,14 +159,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 let images = i["images"] as! [String : Any]
                 let appropriateSize = images["fixed_height_small"] as! [String : Any]
                 let gifStringUrl = appropriateSize["url"] as! String
-                let formattedGif = gifStringUrl.replacingOccurrences(of: "\\", with: "")
                 
-                let gifImage = UIImage.gif(url: formattedGif)
-                gifView = UIImageView(image: gifImage)
-                //view.addSubview(gifView)
-                print(gifImage)
+//                let gifImage = UIImage.gif(url: gifStringUrl)
+//                gifView = UIImageView(image: gifImage)
+//               
+//                print(gifImage!)
                 
-                gifsArray.append(gifView)
+                gifsArray.append(gifStringUrl)
+                //myCollectionView.reloadData()
 
                 
 
@@ -120,9 +193,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     // GET DATA
     
-    func getData() -> [UIImageView] {
+    func getData() -> [String] {
         
-        var result = [UIImageView]()
+        var result = [String]()
         
         if isSearching {
             if searchBar.text != nil || searchBar.text != "" {
@@ -131,6 +204,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 
                 let searchUrl = URL(string: "http://api.giphy.com/v1/gifs/search?q=\(inputAddingPercentEncoding!)&api_key=c61e8bb1a9c14a6e8dc6fb15d211b4b5")
                 result = parseData(url: searchUrl!)
+                
                 
 //                        let itemSize = UIScreen.main.bounds.width/3 - 3
 //                        let layout = UICollectionViewFlowLayout()
@@ -145,11 +219,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         } else {
             
             let gifStringURL : String = "https://media1.giphy.com/media/JIX9t2j0ZTN9S/100.gif"
-            let gifImage = UIImage.gif(url: gifStringURL)!
-            gifView = UIImageView(image: gifImage)
-            //myCollectionView.addSubview(gifView)
-            print(gifImage)
-            result.append(gifView)
+//            let gifImage = UIImage.gif(url: gifStringURL)!
+//            gifView = UIImageView(image: gifImage)
+//           
+//            print(gifImage)
+            result.append(gifStringURL)
+            
             
             
 //            let defaultUrl = URL(string: "http://www.recipepuppy.com/api/?i=onions,garlic&q=omelet&p=3")
@@ -162,7 +237,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // RETRIEVE DATA
     
 //    func retrieveDataFromFirebase(isSearching: Bool) {
-//        
+//
 //        if isSearching {
 //            
 //            ref?.child(searchString).observe(.childAdded, with: { (snapshot) in
@@ -192,6 +267,73 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //        }
 //    }
     
+    
+    //MARK: Save data to Firebase
+    func saveDataToFirebase(text: [String]) {
+        
+        ref?.child("gifList").setValue(text)
+        
+        //ref?.child(citiesStr).childByAutoId().setValue(text)
+        
+    }
+    
+    // RETRIEVE DATA
+    
+    func retrieveDataFromFirebase() { //-> [String] {
+        
+        var result = [String]()
+        //if isSearching {
+            ref?.queryOrdered(byChild: "gifList").observe(.childAdded, with: { (snapshot) in
+           // ref?.child("gifList").observe(.childAdded, with: { (snapshot) in
+                
+                
+                
+                let item = snapshot.value! as! [String]
+                //print(item)
+                var index = 0
+                for _ in 0...24 {
+                    let url = item[index] as! String
+                    result.append(url)
+                    //print(url)
+                    index += 1
+                    //print(result.count)
+                    
+                    
+//                    result.append(item[String(index)] as! String)
+//                    index += 1
+                }
+                print(result.count)
+                if result.count == 25 {
+                    self.myCollectionView.reloadData()
+                    //  return
+                }
+//                //self.gifStrings = item
+//                //let singleRecipe = Recipe(dictionary: self.item)
+//                //self.recipesSearchFromFirebase.append(singleRecipe)
+//                
+                
+                
+            })
+//        print(result.count)
+//        return result
+//        } else {
+//            
+//            ref?.child(defaultString).observe(.childAdded, with: { (snapshot) in
+//                
+//                self.item = snapshot.value! as! [String : AnyObject]
+//                let singleRecipe = Recipe(dictionary: self.item)
+//                self.recipesDefaultFromFirebase.append(singleRecipe)
+//                if self.recipesDefaultFromFirebase.count == 10 {
+//                    self.tableView.reloadData()
+//                    //  return
+//                }
+//            })
+//        }
+    }
+
+    
+    
+    //MARK: CORE DATA
 //    func save(name: String) {
 //        
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -221,7 +363,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         if  searchBar.text == "" {
             isSearching = false
             view.endEditing(true)
-            gifsArray = getData()
+            gifStrings = getData()
             myCollectionView.reloadData()
             
         }
@@ -237,7 +379,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             view.endEditing(true)
         } else {
             isSearching = true
-            gifsArray = getData()
+            gifStrings = getData()
             myCollectionView.reloadData()
             print(gifsArray)
             print("COUNT: \(gifsArray.count)")
