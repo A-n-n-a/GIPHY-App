@@ -83,10 +83,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 //                    index += 1
             }
             print(self.gifStrings.count)
-//            if self.gifStrings.count == 25 {
-//                self.myCollectionView.reloadData()
-//                //  return
-//            }
+            if self.gifStrings.count == 25 {
+                self.myCollectionView.reloadData()
+                //  return
+            }
             //                //self.gifStrings = item
             //                //let singleRecipe = Recipe(dictionary: self.item)
             //                //self.recipesSearchFromFirebase.append(singleRecipe)
@@ -99,7 +99,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         //retrieveDataFromFirebase()
         //myCollectionView.reloadData()
-        print(gifStrings.count)
+       // print(gifStrings.count)
         
     
         //gifStrings = getData()
@@ -108,6 +108,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
 
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(gifStrings.count)
+        if gifStrings.count == 0 {
+            self.myCollectionView.reloadData()
+        }
         return gifStrings.count
     }
     
@@ -117,21 +121,29 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CollectionViewCell
         
-        let urlString = gifStrings[indexPath.row]
-        let gifImage = UIImage.gif(url: urlString)
-        let gifView = UIImageView(image: gifImage)
+        DispatchQueue.global().async {
+            let urlString = self.gifStrings[indexPath.row]
+            let gifImage = UIImage.gif(url: urlString)
+            let gifView = UIImageView(image: gifImage)
+            
+            DispatchQueue.main.async {
+                cell.addSubview(gifView)
+                cell.gifImage = gifView
+            }
+        }
+        
         
                         //print(gifImage!)
         
         //let gifView = gifsArray[indexPath.row]
-        cell.addSubview(gifView)
         
-        if gifStrings.count == 0 {
-            self.myCollectionView.reloadData()
-        }
+//        print(gifStrings.count)
+//        if gifStrings.count == 0 {
+//            self.myCollectionView.reloadData()
+//        }
         
         //cell.gifImage.center.x = cell.frame.size.width/(CGFloat(2.0))
-        cell.gifImage = gifView
+        
         
         saveDataToFirebase(text: gifStrings)
         
@@ -281,7 +293,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func retrieveDataFromFirebase() { //-> [String] {
         
-        var result = [String]()
+        //var result = [String]()
         //if isSearching {
             ref?.queryOrdered(byChild: "gifList").observe(.childAdded, with: { (snapshot) in
            // ref?.child("gifList").observe(.childAdded, with: { (snapshot) in
@@ -292,8 +304,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 //print(item)
                 var index = 0
                 for _ in 0...24 {
-                    let url = item[index] as! String
-                    result.append(url)
+                    let url = item[index]
+                    self.gifStrings.append(url)
                     //print(url)
                     index += 1
                     //print(result.count)
@@ -302,11 +314,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //                    result.append(item[String(index)] as! String)
 //                    index += 1
                 }
-                print(result.count)
-                if result.count == 25 {
-                    self.myCollectionView.reloadData()
-                    //  return
-                }
+ //               print(self.gifStrings.count)
+//                if result.count == 25 {
+//                    self.myCollectionView.reloadData()
+//                    //  return
+//                }
 //                //self.gifStrings = item
 //                //let singleRecipe = Recipe(dictionary: self.item)
 //                //self.recipesSearchFromFirebase.append(singleRecipe)
