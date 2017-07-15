@@ -15,6 +15,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //    var isSearching = false
     
     var gifStrings = [String]()
+    
+    var gifsViewsFromCoreData = [UIImageView]()
 
     
     var selectedRow = CollectionViewCell()
@@ -48,11 +50,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         retrieveDataFromFirebase()
         
         if isConnectedToNetwork() == false {
-            gifStrings = fetchFromCoreData()
+            gifsViewsFromCoreData = fetchFromCoreData()
             myCollectionView.reloadData()
-            print("FROM CORE DATA: \(gifStrings.count)")
+            print("FROM CORE DATA: \(gifsViewsFromCoreData.count)")
             
         }
+        
+        //deleteDataInCoreData()
 
 
         
@@ -64,7 +68,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.myCollectionView.reloadData()
         }
         print("NUMBER OF ROWS: \(gifStrings.count)")
-        return gifStrings.count
+        
+        var count = Int()
+        
+        if isConnectedToNetwork() == false {
+            count = gifsViewsFromCoreData.count
+        } else {
+            count = gifStrings.count
+        }
+        
+        
+        return count
     }
     
     
@@ -73,14 +87,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! CollectionViewCell
         
-        DispatchQueue.global().async {
-            let urlString = self.gifStrings[indexPath.row]
-            let gifImage = UIImage.gif(url: urlString)
-            let gifView = UIImageView(image: gifImage)
-            
-            DispatchQueue.main.async {
-                cell.addSubview(gifView)
-                cell.gifImage = gifView
+        if isConnectedToNetwork() == false {
+            let gifView = gifsViewsFromCoreData[indexPath.row]
+            cell.gifImage = gifView
+            cell.addSubview(gifView)
+        } else {
+        
+            DispatchQueue.global().async {
+                let urlString = self.gifStrings[indexPath.row]
+                let gifImage = UIImage.gif(url: urlString)
+                let gifView = UIImageView(image: gifImage)
+                
+                DispatchQueue.main.async {
+                    cell.addSubview(gifView)
+                    cell.gifImage = gifView
+                }
             }
         }
         
@@ -175,8 +196,16 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // save data to Core Data
     func saveToCoreData(array: [String]) {
         
+        var imageViewArray = [UIImageView]()
+        
         let entity = NSEntityDescription.insertNewObject(forEntityName: "Gif", into: self.context)
-        entity.setValue(array, forKey: "arrayOfStringUrls")
+        //entity.setValue(array, forKey: "arrayOfStringUrls")
+        
+        for i in array {
+            let imageView = stringToView(string: i)
+            imageViewArray.append(imageView)
+        }
+        entity.setValue(imageViewArray, forKey: "arrayOfStringUrls")
         
         do {
             try context.save()
@@ -191,7 +220,38 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     // getting data from core data
     
     
-    func fetchFromCoreData() -> [String] {
+    func fetchFromCoreData() -> [UIImageView] {
+        
+        var imageViewArray = [UIImageView]()
+        //var gifs = [String]()
+        
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Gif")
+        request.returnsObjectsAsFaults = false
+        
+        do {
+            let results = try context.fetch(request)
+            
+            if results.count > 0 {
+                for result in results {
+            
+                    
+                    // fetch data
+                    if let gifImageViewArray = (result as AnyObject).value(forKey: "arrayOfStringUrls") as? [UIImageView] {
+                        
+                         imageViewArray = gifImageViewArray
+                        
+                    }
+                    
+                }
+                
+            }
+        } catch {
+            print("Error: \(error)")
+        }
+        return imageViewArray
+    }
+    
+    func deleteDataInCoreData() {
         
         var gifs = [String]()
         
@@ -203,37 +263,23 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             if results.count > 0 {
                 for result in results {
+
                     
+                    let resultData = result as! NSManagedObject
+                    context.delete(resultData)
+                    try context.save()
+                    print("DELETED")
                     
-                    
-                    // delete all data from core data if needed
-                    
-                    
-//                    let resultData = result as! NSManagedObject
-//                    context.delete(resultData)
-//                    try context.save()
-//                    print("DELETED")
-                    
-                    
-                    
-                    
-                    // fetch data
-                    if let gifList = (result as AnyObject).value(forKey: "arrayOfStringUrls") as? [String] {
-                        
-                         gifs = gifList
-                        
-                    }
-                    
+               
                 }
                 
             }
         } catch {
             print("Error: \(error)")
         }
-        return gifs
+    
     }
-    
-    
+
     
     
     //MARK: CORE DATA
@@ -322,6 +368,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         return (isReachable && !needsConnection)
         
+    }
+    
+    func stringToView(string: String) -> UIImageView {
+        //let urlString = self.gifStrings[indexPath.row]
+        let gifImage = UIImage.gif(url: string)
+        let gifView = UIImageView(image: gifImage)
+        
+        return gifView
     }
 
 
