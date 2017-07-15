@@ -13,6 +13,8 @@
 		953BCC5E1F191BF700377512 /* GIPHY__App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 953BCC5C1F191BF700377512 /* GIPHY__App.xcdatamodeld */; };
 		953BCC601F191BF700377512 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 953BCC5F1F191BF700377512 /* Assets.xcassets */; };
 		953BCC631F191BF700377512 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 953BCC611F191BF700377512 /* LaunchScreen.storyboard */; };
+		953BCC6D1F19332100377512 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCC6C1F19332100377512 /* CollectionViewCell.swift */; };
+		953BCC701F19472700377512 /* BahloSwiftGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCC6F1F19472700377512 /* BahloSwiftGif.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		953BCC5F1F191BF700377512 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		953BCC621F191BF700377512 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		953BCC641F191BF700377512 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		953BCC6C1F19332100377512 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		953BCC6F1F19472700377512 /* BahloSwiftGif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahloSwiftGif.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 				953BCC551F191BF700377512 /* AppDelegate.swift */,
 				953BCC571F191BF700377512 /* ViewController.swift */,
 				953BCC591F191BF700377512 /* Main.storyboard */,
+				953BCC6C1F19332100377512 /* CollectionViewCell.swift */,
+				953BCC6F1F19472700377512 /* BahloSwiftGif.swift */,
 				953BCC5F1F191BF700377512 /* Assets.xcassets */,
 				953BCC611F191BF700377512 /* LaunchScreen.storyboard */,
 				953BCC641F191BF700377512 /* Info.plist */,
@@ -140,6 +146,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				953BCC6D1F19332100377512 /* CollectionViewCell.swift in Sources */,
+				953BCC701F19472700377512 /* BahloSwiftGif.swift in Sources */,
 				953BCC581F191BF700377512 /* ViewController.swift in Sources */,
 				953BCC561F191BF700377512 /* AppDelegate.swift in Sources */,
 				953BCC5E1F191BF700377512 /* GIPHY__App.xcdatamodeld in Sources */,
