@@ -9,15 +9,19 @@
 /* Begin PBXBuildFile section */
 		086EDBF996907F7CE0A39A70 /* Pods_GIPHY__App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 446091E4C942A58CD7E4400C /* Pods_GIPHY__App.framework */; };
 		953BCC561F191BF700377512 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCC551F191BF700377512 /* AppDelegate.swift */; };
-		953BCC581F191BF700377512 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCC571F191BF700377512 /* ViewController.swift */; };
-		953BCC5B1F191BF700377512 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 953BCC591F191BF700377512 /* Main.storyboard */; };
-		953BCC5E1F191BF700377512 /* GIPHY__App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 953BCC5C1F191BF700377512 /* GIPHY__App.xcdatamodeld */; };
-		953BCC601F191BF700377512 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 953BCC5F1F191BF700377512 /* Assets.xcassets */; };
-		953BCC631F191BF700377512 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 953BCC611F191BF700377512 /* LaunchScreen.storyboard */; };
-		953BCC6D1F19332100377512 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCC6C1F19332100377512 /* CollectionViewCell.swift */; };
-		953BCC701F19472700377512 /* BahloSwiftGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCC6F1F19472700377512 /* BahloSwiftGif.swift */; };
-		953BCC971F19F6E000377512 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 953BCC961F19F6E000377512 /* GoogleService-Info.plist */; };
-		953BCC991F1A330E00377512 /* LargeGifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCC981F1A330E00377512 /* LargeGifViewController.swift */; };
+		953BCCA21F1BF1AA00377512 /* LargeGifViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCCA01F1BF1AA00377512 /* LargeGifViewController.swift */; };
+		953BCCA31F1BF1AA00377512 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCCA11F1BF1AA00377512 /* ViewController.swift */; };
+		953BCCAC1F1BF1C700377512 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 953BCCA41F1BF1C700377512 /* GoogleService-Info.plist */; };
+		953BCCAD1F1BF1C700377512 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 953BCCA51F1BF1C700377512 /* LaunchScreen.storyboard */; };
+		953BCCAE1F1BF1C700377512 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 953BCCA61F1BF1C700377512 /* Main.storyboard */; };
+		953BCCAF1F1BF1C700377512 /* BahloSwiftGif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCCA81F1BF1C700377512 /* BahloSwiftGif.swift */; };
+		953BCCB01F1BF1C700377512 /* Global functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCCA91F1BF1C700377512 /* Global functions.swift */; };
+		953BCCB11F1BF1C700377512 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953BCCAB1F1BF1C700377512 /* CollectionViewCell.swift */; };
+		953BCCB41F1BF29600377512 /* GIPHY__App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 953BCCB21F1BF29600377512 /* GIPHY__App.xcdatamodeld */; };
+		953BCCB71F1BF2B200377512 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 953BCCB51F1BF2B200377512 /* Podfile */; };
+		953BCCB81F1BF2B200377512 /* Podfile.lock in Resources */ = {isa = PBXBuildFile; fileRef = 953BCCB61F1BF2B200377512 /* Podfile.lock */; };
+		953BCCBB1F1BF2DA00377512 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 953BCCBA1F1BF2DA00377512 /* Assets.xcassets */; };
+		953BCCBD1F1BF31A00377512 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 953BCCBC1F1BF31A00377512 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,16 +30,19 @@
 		7E0D0B2745F3B5D8AE92F7D2 /* Pods-GIPHY  App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GIPHY  App.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GIPHY  App/Pods-GIPHY  App.debug.xcconfig"; sourceTree = "<group>"; };
 		953BCC521F191BF700377512 /* GIPHY  App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "GIPHY  App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		953BCC551F191BF700377512 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		953BCC571F191BF700377512 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		953BCC5A1F191BF700377512 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		953BCC5D1F191BF700377512 /* GIPHY__App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GIPHY__App.xcdatamodel; sourceTree = "<group>"; };
-		953BCC5F1F191BF700377512 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		953BCC621F191BF700377512 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		953BCC641F191BF700377512 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		953BCC6C1F19332100377512 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
-		953BCC6F1F19472700377512 /* BahloSwiftGif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahloSwiftGif.swift; sourceTree = "<group>"; };
-		953BCC961F19F6E000377512 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
-		953BCC981F1A330E00377512 /* LargeGifViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeGifViewController.swift; sourceTree = "<group>"; };
+		953BCCA01F1BF1AA00377512 /* LargeGifViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LargeGifViewController.swift; sourceTree = "<group>"; };
+		953BCCA11F1BF1AA00377512 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		953BCCA41F1BF1C700377512 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		953BCCA51F1BF1C700377512 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		953BCCA61F1BF1C700377512 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		953BCCA81F1BF1C700377512 /* BahloSwiftGif.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BahloSwiftGif.swift; sourceTree = "<group>"; };
+		953BCCA91F1BF1C700377512 /* Global functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Global functions.swift"; sourceTree = "<group>"; };
+		953BCCAB1F1BF1C700377512 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		953BCCB31F1BF29600377512 /* GIPHY__App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GIPHY__App.xcdatamodel; sourceTree = "<group>"; };
+		953BCCB51F1BF2B200377512 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
+		953BCCB61F1BF2B200377512 /* Podfile.lock */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile.lock; sourceTree = SOURCE_ROOT; };
+		953BCCBA1F1BF2DA00377512 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		953BCCBC1F1BF31A00377512 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +73,7 @@
 				953BCC531F191BF700377512 /* Products */,
 				5E468D998384158A7629EF93 /* Pods */,
 				A2DBAE0F202DCF2A14C7A7F4 /* Frameworks */,
+				953BCCB91F1BF2DA00377512 /* Resources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -81,18 +89,52 @@
 			isa = PBXGroup;
 			children = (
 				953BCC551F191BF700377512 /* AppDelegate.swift */,
-				953BCC571F191BF700377512 /* ViewController.swift */,
-				953BCC981F1A330E00377512 /* LargeGifViewController.swift */,
-				953BCC591F191BF700377512 /* Main.storyboard */,
-				953BCC6C1F19332100377512 /* CollectionViewCell.swift */,
-				953BCC6F1F19472700377512 /* BahloSwiftGif.swift */,
-				953BCC5F1F191BF700377512 /* Assets.xcassets */,
-				953BCC611F191BF700377512 /* LaunchScreen.storyboard */,
-				953BCC641F191BF700377512 /* Info.plist */,
-				953BCC961F19F6E000377512 /* GoogleService-Info.plist */,
-				953BCC5C1F191BF700377512 /* GIPHY__App.xcdatamodeld */,
+				953BCCA71F1BF1C700377512 /* Models */,
+				953BCCAA1F1BF1C700377512 /* Views */,
+				953BCC9F1F1BF1AA00377512 /* Controllers */,
+				953BCCA61F1BF1C700377512 /* Main.storyboard */,
+				953BCCA51F1BF1C700377512 /* LaunchScreen.storyboard */,
+				953BCCA41F1BF1C700377512 /* GoogleService-Info.plist */,
+				953BCCBC1F1BF31A00377512 /* Info.plist */,
+				953BCCB21F1BF29600377512 /* GIPHY__App.xcdatamodeld */,
+				953BCCB51F1BF2B200377512 /* Podfile */,
+				953BCCB61F1BF2B200377512 /* Podfile.lock */,
 			);
 			path = "GIPHY  App";
+			sourceTree = "<group>";
+		};
+		953BCC9F1F1BF1AA00377512 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				953BCCA01F1BF1AA00377512 /* LargeGifViewController.swift */,
+				953BCCA11F1BF1AA00377512 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		953BCCA71F1BF1C700377512 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				953BCCA81F1BF1C700377512 /* BahloSwiftGif.swift */,
+				953BCCA91F1BF1C700377512 /* Global functions.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		953BCCAA1F1BF1C700377512 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				953BCCAB1F1BF1C700377512 /* CollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		953BCCB91F1BF2DA00377512 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				953BCCBA1F1BF2DA00377512 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		A2DBAE0F202DCF2A14C7A7F4 /* Frameworks */ = {
@@ -166,10 +208,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				953BCC631F191BF700377512 /* LaunchScreen.storyboard in Resources */,
-				953BCC971F19F6E000377512 /* GoogleService-Info.plist in Resources */,
-				953BCC601F191BF700377512 /* Assets.xcassets in Resources */,
-				953BCC5B1F191BF700377512 /* Main.storyboard in Resources */,
+				953BCCAE1F1BF1C700377512 /* Main.storyboard in Resources */,
+				953BCCAC1F1BF1C700377512 /* GoogleService-Info.plist in Resources */,
+				953BCCB81F1BF2B200377512 /* Podfile.lock in Resources */,
+				953BCCB71F1BF2B200377512 /* Podfile in Resources */,
+				953BCCBB1F1BF2DA00377512 /* Assets.xcassets in Resources */,
+				953BCCAD1F1BF1C700377512 /* LaunchScreen.storyboard in Resources */,
+				953BCCBD1F1BF31A00377512 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,35 +273,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				953BCC6D1F19332100377512 /* CollectionViewCell.swift in Sources */,
-				953BCC701F19472700377512 /* BahloSwiftGif.swift in Sources */,
-				953BCC581F191BF700377512 /* ViewController.swift in Sources */,
-				953BCC991F1A330E00377512 /* LargeGifViewController.swift in Sources */,
+				953BCCB01F1BF1C700377512 /* Global functions.swift in Sources */,
+				953BCCA31F1BF1AA00377512 /* ViewController.swift in Sources */,
+				953BCCB41F1BF29600377512 /* GIPHY__App.xcdatamodeld in Sources */,
+				953BCCB11F1BF1C700377512 /* CollectionViewCell.swift in Sources */,
 				953BCC561F191BF700377512 /* AppDelegate.swift in Sources */,
-				953BCC5E1F191BF700377512 /* GIPHY__App.xcdatamodeld in Sources */,
+				953BCCA21F1BF1AA00377512 /* LargeGifViewController.swift in Sources */,
+				953BCCAF1F1BF1C700377512 /* BahloSwiftGif.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		953BCC591F191BF700377512 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				953BCC5A1F191BF700377512 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		953BCC611F191BF700377512 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				953BCC621F191BF700377512 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		953BCC651F191BF700377512 /* Debug */ = {
@@ -404,13 +431,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		953BCC5C1F191BF700377512 /* GIPHY__App.xcdatamodeld */ = {
+		953BCCB21F1BF29600377512 /* GIPHY__App.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				953BCC5D1F191BF700377512 /* GIPHY__App.xcdatamodel */,
+				953BCCB31F1BF29600377512 /* GIPHY__App.xcdatamodel */,
 			);
-			currentVersion = 953BCC5D1F191BF700377512 /* GIPHY__App.xcdatamodel */;
-			path = GIPHY__App.xcdatamodeld;
+			currentVersion = 953BCCB31F1BF29600377512 /* GIPHY__App.xcdatamodel */;
+			name = GIPHY__App.xcdatamodeld;
+			path = ../GIPHY__App.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
