@@ -106,8 +106,8 @@
 		953BCC9F1F1BF1AA00377512 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				953BCCA01F1BF1AA00377512 /* LargeGifViewController.swift */,
 				953BCCA11F1BF1AA00377512 /* ViewController.swift */,
+				953BCCA01F1BF1AA00377512 /* LargeGifViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

@@ -178,6 +178,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             saveToCoreData(array: gifStrings, context: context)
 
         }
+        searchBar.resignFirstResponder()
     }
     
     //MARK: PREPARE FOR GEGUE
@@ -195,6 +196,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             destViewController.recievedGif = gifsViewsFromCoreData[(selectedRowIndex?.row)!]
         }
     }
+    
+    
     
     
     
