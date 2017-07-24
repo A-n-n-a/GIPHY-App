@@ -21,7 +21,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
-    var context = NSManagedObjectContext()
+    var context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
     
     
     override func viewDidLoad() {
